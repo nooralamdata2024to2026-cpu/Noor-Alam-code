@@ -1,178 +1,198 @@
-            <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="hi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Noor Alam 2.113.13</title>
+    <title>Noor Alam 61113.13</title>
     <style>
-        /* स्क्रीनशॉट से बचने के लिए सिलेक्शन बंद करना */
-        * {
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
-
         body { 
             font-family: 'Segoe UI', sans-serif; 
             background: linear-gradient(135deg, #0f0c29, #302b63, #24243e); 
-            color: white; 
-            min-height: 100vh;
-            margin: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: filter 0.3s;
+            color: white; min-height: 100vh; margin: 0;
+            display: flex; align-items: center; justify-content: center;
+            overflow: hidden;
         }
 
-        /* पासवर्ड वाला पर्दा */
-        #lockScreen {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: #0f0c29;
-            z-index: 1000;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+        /* ट्यूटोरियल ओवरले */
+        #tutorial-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); z-index: 9999;
+        }
+        
+        #step-content {
+            position: absolute; background: #00ffcc; color: #000; 
+            padding: 10px 15px; border-radius: 10px; font-weight: bold; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5); font-size: 13px;
+            transition: all 0.3s ease; pointer-events: none; z-index: 10002;
         }
 
-        #lockScreen input {
-            padding: 12px;
-            border-radius: 10px;
-            border: 1px solid #00ffcc;
-            background: transparent;
-            color: white;
-            text-align: center;
-            font-size: 18px;
-            outline: none;
-            margin-bottom: 15px;
+        .arrow-up { 
+            width: 0; height: 0; border-left: 8px solid transparent; 
+            border-right: 8px solid transparent; border-bottom: 10px solid #00ffcc; 
+            position: absolute; top: -10px; left: 50%; transform: translateX(-50%); 
         }
 
-        #lockScreen button {
-            padding: 10px 25px;
-            background: #00ffcc;
-            border: none;
-            border-radius: 20px;
-            font-weight: bold;
-            cursor: pointer;
+        /* लॉगिन स्क्रीन */
+        #login-screen {
+            background: rgba(255, 255, 255, 0.1); padding: 40px; border-radius: 30px;
+            backdrop-filter: blur(15px); text-align: center; border: 1px solid rgba(255,255,255,0.1);
         }
 
         .container { 
-            background: rgba(255, 255, 255, 0.05); 
-            backdrop-filter: blur(10px);
-            padding: 30px; 
-            border-radius: 30px; 
-            width: 90%; 
-            max-width: 400px; 
-            border: 1px solid rgba(255,255,255,0.1);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
-            text-align: center;
+            display: none; background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px);
+            padding: 20px; border-radius: 30px; width: 92%; max-width: 400px; 
+            border: 1px solid rgba(255,255,255,0.1); text-align: center;
+            max-height: 95vh; overflow-y: auto;
         }
 
-        h2 { color: #00ffcc; text-shadow: 0 0 10px #00ffcc; margin-bottom: 25px; font-size: 26px; }
+        h2 { color: #00ffcc; text-shadow: 0 0 10px #00ffcc; margin-top: 0; font-size: 24px; margin-bottom: 20px; }
         
-        .label-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-        .label { font-size: 14px; font-weight: bold; }
-        .enc-label { color: #ff00ff; }
-        .dec-label { color: #00d2ff; }
+        .action-bar { display: flex; justify-content: center; gap: 15px; margin-bottom: 10px; }
 
-        .btn-action { background: none; border: none; cursor: pointer; font-size: 18px; padding: 0 5px; }
-
+        .btn-action { 
+            background: rgba(255,255,255,0.15); border: 1px solid #00ffcc; cursor: pointer; 
+            font-size: 14px; padding: 6px 12px; border-radius: 8px; color: white; transition: 0.2s;
+            display: flex; align-items: center; gap: 5px;
+        }
+        .btn-action:active { transform: scale(0.9); }
+        
         textarea { 
-            width: 100%; height: 65px; padding: 12px; border-radius: 15px; 
-            border: none; margin-bottom: 15px; font-size: 16px; 
-            background: rgba(0,0,0,0.3); color: #fff; outline: none;
-            box-sizing: border-box; border: 1px solid #444;
+            width: 100%; height: 60px; padding: 12px; border-radius: 15px; border: 1px solid #444;
+            background: rgba(0,0,0,0.3); color: #fff; outline: none; box-sizing: border-box; margin-bottom: 10px; font-size: 16px;
+        }
+        
+        .display-area { 
+            width: 100%; padding: 12px; background: rgba(0,0,0,0.5); border-radius: 15px; 
+            min-height: 40px; font-size: 18px; word-wrap: break-word; border: 2px dashed #555; 
+            margin-bottom: 15px; box-sizing: border-box;
         }
 
-        .display-area { 
-            width: 100%; padding: 15px; background: rgba(0,0,0,0.5); 
-            border-radius: 15px; min-height: 40px; font-size: 22px; 
-            word-wrap: break-word; cursor: pointer; border: 2px dashed #555;
-            box-sizing: border-box; margin-bottom: 25px;
-        }
-        #codeOutput { color: #ff00ff; border-color: #ff00ff; }
-        #textOutput { color: #00d2ff; border-color: #00d2ff; }
+        #passInput { padding: 10px; border-radius: 10px; border: 1px solid #00ffcc; background: #000; color: #00ffcc; margin-bottom: 15px; text-align: center; width: 120px; }
+        #loginBtn { background: #00ffcc; color: #000; border: none; padding: 10px 25px; border-radius: 10px; font-weight: bold; cursor: pointer; }
         
-        #toast { 
-            visibility: hidden; background: #00ffcc; color: #000; 
-            font-weight: bold; padding: 10px 20px; border-radius: 20px; 
-            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); 
-        }
+        #toast { visibility: hidden; background: #00ffcc; color: #000; font-weight: bold; padding: 10px 20px; border-radius: 20px; position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 10000; }
         #toast.show { visibility: visible; }
+
+        .highlight { outline: 3px solid #00ffcc; outline-offset: 3px; z-index: 10001; position: relative; }
     </style>
 </head>
-<body oncontextmenu="return false;"> <div id="lockScreen">
-    <h2 style="font-size: 20px;">Private Access</h2>
-    <input type="password" id="passKey" placeholder="Password डालें">
-    <button onclick="unlock()">Unlock</button>
+<body onclick="handleGlobalClick(event)">
+
+<div id="tutorial-overlay">
+    <div id="step-content">
+        <div class="arrow-up"></div>
+        <span id="step-text"></span>
+    </div>
 </div>
 
-<div class="container">
-    <h2>Noor Alam 2.113.13</h2>
-    
-    <div class="label-row">
-        <span class="label enc-label">नाम से कोड:</span>
-        <div>
-            <button class="btn-action" onclick="clearBox('textInput', 'codeOutput')">🗑️</button>
-            <button class="btn-action" onclick="copyThis('codeOutput')">📋</button>
-        </div>
-    </div>
-    <textarea id="textInput" placeholder="Hinglish..." oninput="encodeText()"></textarea>
-    <div class="display-area" id="codeOutput" onclick="copyThis('codeOutput')">---</div>
+<div id="login-screen">
+    <h2>Security Lock 🔒</h2>
+    <input type="password" id="passInput" placeholder="Password">
+    <br>
+    <button id="loginBtn" onclick="checkPassword()">Unlock</button>
+</div>
 
-    <div class="label-row">
-        <span class="label dec-label">कोड से नाम:</span>
-        <div>
-            <button class="btn-action" onclick="clearBox('codeInput', 'textOutput')">🗑️</button>
-            <button class="btn-action" onclick="copyThis('textOutput')">📋</button>
-        </div>
+<div class="container" id="mainContainer">
+    <h2>Noor Alam 61113.13</h2>
+    
+    <p style="color:#ff00ff; font-size:11px; margin-bottom:5px; font-weight:bold;">WORD TO CODE</p>
+    <textarea id="textInput" placeholder="लिखें..." oninput="encodeText()"></textarea>
+    
+    <div class="action-bar">
+        <button class="btn-action" id="delBtn1" onclick="clearBox('textInput', 'codeOutput')">🗑️ Delete</button>
+        <button class="btn-action" id="copyBtn1" onclick="copyThis('codeOutput')">📋 Copy</button>
     </div>
-    <textarea id="codeInput" placeholder="2.113.13..." oninput="decodeText()"></textarea>
-    <div class="display-area" id="textOutput" onclick="copyThis('textOutput')">---</div>
+    
+    <div class="display-area" id="codeOutput" style="color:#ff00ff; border-color:#ff00ff;">---</div>
+
+    <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 10px 0;">
+
+    <p style="color:#00d2ff; font-size:11px; margin-bottom:5px; font-weight:bold;">CODE TO WORD</p>
+    <textarea id="codeInput" placeholder="कोड डालें..." oninput="decodeText()"></textarea>
+
+    <div class="action-bar">
+        <button class="btn-action" id="delBtn2" onclick="clearBox('codeInput', 'textOutput')">🗑️ Delete</button>
+        <button class="btn-action" id="copyBtn2" onclick="copyThis('textOutput')">📋 Copy</button>
+    </div>
+
+    <div class="display-area" id="textOutput" style="color:#00d2ff; border-color:#00d2ff;">---</div>
 </div>
 
 <div id="toast">Copied! ✅</div>
 
 <script>
-    // --- सुरक्षा सेटिंग्स ---
-    const myPass = "1234"; // अपना पासवर्ड यहाँ बदलें
+    window.onload = function() {
+        if(localStorage.getItem('noor_v5_auth') === 'true') { showMain(); }
+    };
 
-    function unlock() {
-        let input = document.getElementById('passKey').value;
-        if(input === myPass) {
-            localStorage.setItem('appUnlocked', 'true');
-            document.getElementById('lockScreen').style.display = 'none';
-        } else {
-            alert("गलत पासवर्ड!");
+    function checkPassword() {
+        if (document.getElementById('passInput').value === "1234") {
+            localStorage.setItem('noor_v5_auth', 'true');
+            showMain();
+        } else { alert("गलत पासवर्ड!"); }
+    }
+
+    function showMain() {
+        document.getElementById('login-screen').style.display = 'none';
+        document.getElementById('mainContainer').style.display = 'block';
+        if(!localStorage.getItem('noor_v5_tour')) { setTimeout(startTutorial, 600); }
+    }
+
+    let currentStep = 0;
+    const steps = [
+        { id: "textInput", text: "वर्ड को कोड बनाने के लिए यहां क्लिक करें" },
+        { id: "codeOutput", text: "यहां आपका कोड आएगा" },
+        { id: "delBtn1", text: "Delete" },
+        { id: "copyBtn1", text: "Copy" },
+        { id: "codeInput", text: "यहां कोड को वर्ड में बदलें" },
+        { id: "textOutput", text: "यहां आपके कोड का मतलब" },
+        { id: "delBtn2", text: "Delete" },
+        { id: "copyBtn2", text: "Copy" }
+    ];
+
+    function startTutorial() {
+        document.getElementById('tutorial-overlay').style.display = 'block';
+        updateStep();
+    }
+
+    function handleGlobalClick(e) {
+        if(document.getElementById('tutorial-overlay').style.display === 'block') { nextStep(); }
+    }
+
+    function nextStep() {
+        currentStep++;
+        if(currentStep < steps.length) { updateStep(); }
+        else {
+            document.getElementById('tutorial-overlay').style.display = 'none';
+            localStorage.setItem('noor_v5_tour', 'true');
+            steps.forEach(s => document.getElementById(s.id).classList.remove('highlight'));
         }
     }
 
-    // चेक करें कि क्या पहले अनलॉक किया जा चुका है
-    if(localStorage.getItem('appUnlocked') === 'true') {
-        document.getElementById('lockScreen').style.display = 'none';
+    function updateStep() {
+        steps.forEach(s => document.getElementById(s.id).classList.remove('highlight'));
+        const s = steps[currentStep];
+        const target = document.getElementById(s.id);
+        const tip = document.getElementById('step-content');
+        
+        target.classList.add('highlight');
+        document.getElementById('step-text').innerText = s.text;
+
+        const rect = target.getBoundingClientRect();
+        tip.style.top = (rect.bottom + 15) + "px";
+        tip.style.left = (rect.left + rect.width/2 - tip.offsetWidth/2) + "px";
+        if(parseInt(tip.style.left) < 10) tip.style.left = "10px";
     }
 
-    // स्क्रीनशॉट रोकने की कोशिश: अगर यूजर टैब बदलेगा तो स्क्रीन धुंधली हो जाएगी
-    window.addEventListener('blur', () => { document.body.style.filter = 'blur(20px)'; });
-    window.addEventListener('focus', () => { document.body.style.filter = 'none'; });
-
-    // कीबोर्ड सुरक्षा (F12, Ctrl+Shift+I, etc.)
-    document.onkeydown = function(e) {
-        if (e.keyCode == 123 || (e.ctrlKey && e.shiftKey && e.keyCode == 73)) return false;
-    };
-
-    // --- आपका ओरिजिनल लॉजिक ---
+    // कोडिंग लॉजिक
     const dMap = {'e':'13', 'f':'41', 'g':'83', 'h':'32', 'i':'52', 'n':'12', 'o':'11', 'r':'44', 's':'61', 't':'21', 'u':'43', 'v':'53', 'w':'22', 'x':'63'};
     const sMap = {'b':'1', 'c':'2', 'd':'3', 'j':'4', 'k':'5', 'l':'6', 'p':'7', 'q':'8', 'y':'9'};
     const specialNoDot = { 'a':'0', 'm':'#' };
-    const zCode = { 'z':'0.' };
     const rev = {};
-    for (let k in dMap) { rev[dMap[k]] = k; }
-    for (let k in sMap) { rev[sMap[k] + "."] = k; }
-    for (let k in specialNoDot) { rev[specialNoDot[k]] = k; }
-    rev["0."] = "z"; 
+    for (let k in dMap) rev[dMap[k]] = k;
+    for (let k in sMap) rev[sMap[k] + "."] = k;
+    for (let k in specialNoDot) rev[specialNoDot[k]] = k;
+    rev["0."] = "z";
     const hMap = {'न':'n','ू':'o','ो':'o','र':'r','अ':'a','ा':'a','ल':'l','म':'m','ु':'u','स':'s','क':'k','ि':'i','ी':'i'};
 
     function encodeText() {
@@ -186,7 +206,7 @@
                 if (dMap[ec]) enc += dMap[ec];
                 else if (sMap[ec]) enc += sMap[ec] + "."; 
                 else if (specialNoDot[ec]) enc += specialNoDot[ec];
-                else if (zCode[ec]) enc += zCode[ec];
+                else if (ec === 'z') enc += '0.';
                 else enc += ec;
             }
             result.push(enc);
@@ -199,20 +219,13 @@
         let words = input.split(" ");
         let result = [];
         words.forEach(w => {
-            let dec = "";
-            let i = 0;
+            let dec = ""; let i = 0;
             while (i < w.length) {
                 if (w[i] === "0" && w[i+1] === ".") { dec += "z"; i += 2; }
                 else if (w[i] === "#") { dec += "m"; i += 1; }
-                else if (w[i] === "0" && w[i+1] !== ".") { dec += "a"; i += 1; }
-                else if (i + 1 < w.length && w[i+1] === ".") {
-                    let code = w.substr(i, 2);
-                    dec += rev[code] || "?"; i += 2;
-                } else {
-                    let code = w.substr(i, 2);
-                    if (rev[code]) { dec += rev[code]; i += 2; }
-                    else { dec += w[i]; i++; }
-                }
+                else if (w[i] === "0") { dec += "a"; i += 1; }
+                else if (i + 1 < w.length && w[i+1] === ".") { let code = w.substr(i, 2); dec += rev[code] || "?"; i += 2; }
+                else { let code = w.substr(i, 2); if (rev[code]) { dec += rev[code]; i += 2; } else { dec += w[i]; i++; } }
             }
             result.push(dec);
         });
