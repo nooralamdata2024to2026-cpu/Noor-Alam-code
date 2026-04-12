@@ -122,40 +122,22 @@
 
 <script>
     window.onload = function() {
-        if(localStorage.getItem('noor_v5_auth') === 'true') { showMain(); }
-    };
-
-    // यहाँ हमने चाबी का नाम बदल दिया है (v5 से v6 कर दिया)
-    window.onload = function() {
-        if(localStorage.getItem('noor_auth_v6') === 'true') { 
-            showMain(); 
-        }
+        // चाबी का नाम बदलकर 'noor_v8614_auth' कर दिया है ताकि नया पासवर्ड मांगे
+        if(localStorage.getItem('noor_v8614_auth') === 'true') { showMain(); }
     };
 
     function checkPassword() {
-        // "8614" की जगह अपना नया पासवर्ड यहाँ लिखें
-        if (document.getElementById('passInput').value === "अपना_नया_पासवर्ड") {
-            localStorage.setItem('noor_auth_v6', 'true');
+        // पासवर्ड अब 8614 सेट है
+        if (document.getElementById('passInput').value === "8614") {
+            localStorage.setItem('noor_v8614_auth', 'true');
             showMain();
-        } else { 
-            alert("गलत पासवर्ड!"); 
-        }
+        } else { alert("गलत पासवर्ड!"); }
     }
 
     function showMain() {
         document.getElementById('login-screen').style.display = 'none';
         document.getElementById('mainContainer').style.display = 'block';
-        // ट्यूटोरियल की चाबी भी बदल दी ताकि नए पासवर्ड के बाद फिर से दिख सके
-        if(!localStorage.getItem('noor_tour_v6')) { 
-            setTimeout(startTutorial, 600); 
-        }
-    }
-    
-
-    function showMain() {
-        document.getElementById('login-screen').style.display = 'none';
-        document.getElementById('mainContainer').style.display = 'block';
-        if(!localStorage.getItem('noor_v5_tour')) { setTimeout(startTutorial, 600); }
+        if(!localStorage.getItem('noor_v8614_tour')) { setTimeout(startTutorial, 600); }
     }
 
     let currentStep = 0;
@@ -184,7 +166,7 @@
         if(currentStep < steps.length) { updateStep(); }
         else {
             document.getElementById('tutorial-overlay').style.display = 'none';
-            localStorage.setItem('noor_v5_tour', 'true');
+            localStorage.setItem('noor_v8614_tour', 'true');
             steps.forEach(s => document.getElementById(s.id).classList.remove('highlight'));
         }
     }
