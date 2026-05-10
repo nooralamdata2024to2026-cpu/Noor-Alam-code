@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Noor Alam 2.113.13</title>
+    <meta name="theme-color" content="#0a2e1f">
+    <link rel="apple-touch-icon" href="https://replit.com/cdn-cgi/image/width=192,quality=80/https://storage.googleapis.com/replit/images/1715421287955_c6d669a0397554f68593a61f4345f657.png">
+    
+    <link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22Noor%20Alam%20Code%22%2C%22short_name%22%3A%22CodeWorld%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23000000%22%2C%22theme_color%22%3A%22%230a2e1f%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22https%3A%2F%2Freplit.com%2Fcdn-cgi%2Fimage%2Fwidth%3D192%2Cquality%3D80%2Fhttps%3A%2F%2Fstorage.googleapis.com%2Freplit%2Fimages%2F1715421287955_c6d669a0397554f68593a61f4345f657.png%22%2C%22sizes%22%3A%22192x192%22%2C%22type%22%3A%22image%2Fpng%22%2C%22purpose%22%3A%22any%20maskable%22%7D%5D%7D">
+    
     <style>
         :root {
             --bg-color: #f8f9fa;
@@ -38,7 +43,7 @@
         }
 
         /* मेन कंटेनर */
-        #main-content { display: none; width: 100%; display: flex; flex-direction: column; align-items: center; }
+        #main-app { display: none; width: 100%; display: flex; flex-direction: column; align-items: center; }
 
         .header { text-align: center; margin-bottom: 20px; }
         .shield { width: 40px; margin-bottom: 5px; opacity: 0.8; font-size: 35px; }
@@ -96,7 +101,7 @@
     </div>
 </div>
 
-<div id="main-app" style="display: none; width: 100%; flex-direction: column; align-items: center;">
+<div id="main-app">
     <div class="header">
         <div class="shield">🛡️</div>
         <h1>Noor Alam 2.113.13</h1>
@@ -107,7 +112,7 @@
         <div class="card">
             <div class="section-header">
                 <div class="icon-box">T</div>
-                <div class="title-text"><b>Word to Code</b><span>Enter any word or text</span></div>
+                <div class="title-text"><b>Word to Code</b><span>Enter text</span></div>
             </div>
             <textarea id="textInput" placeholder="Enter text..." oninput="encodeText()"></textarea>
             <div class="actions">
@@ -130,7 +135,7 @@
         <div class="card">
             <div class="section-header">
                 <div class="icon-box">&lt;/&gt;</div>
-                <div class="title-text"><b>Code to Word</b><span>Enter any code</span></div>
+                <div class="title-text"><b>Code to Word</b><span>Enter code</span></div>
             </div>
             <textarea id="codeInput" placeholder="Enter code..." oninput="decodeText()"></textarea>
             <div class="actions">
@@ -157,7 +162,7 @@
 <div id="toast">Copied! ✅</div>
 
 <script>
-    // --- पासवर्ड लॉजिक ---
+    // --- पासवर्ड लॉजिक (Baar Baar Nahi Maangega) ---
     const currentPassword = "186142"; // यहाँ अपना पासवर्ड बदल सकते हैं
 
     window.onload = function() {
@@ -183,15 +188,16 @@
         document.getElementById("main-app").style.display = "flex";
     }
 
-    // --- ट्रांसलेटर लॉजिक ---
+    // --- ट्रांसलेटर लॉजिक (Muskan Wala Fix) ---
     const dMap = {'e':'13', 'f':'41', 'g':'83', 'h':'32', 'i':'52', 'n':'12', 'o':'11', 'r':'44', 's':'61', 't':'21', 'u':'43', 'v':'53', 'w':'22', 'x':'63'};
     const sMap = {'b':'1', 'c':'2', 'd':'3', 'j':'4', 'k':'5', 'l':'6', 'p':'7', 'q':'8', 'y':'9', 'z':'0'};
     const special = { 'a':'0', 'm':'#' };
     const hMap = {'न':'n','ू':'o','ो':'o','र':'r','अ':'a','ा':'a','ल':'l','म':'m','ु':'u','स':'s','क':'k','ि':'i','ी':'i'};
 
+    // रिवर्स डिकोडिंग मैप
     const rev = {};
     for (let k in dMap) rev[dMap[k]] = k;
-    for (let k in sMap) rev[sMap[k] + "."] = k;
+    for (let k in sMap) rev[sMap[k] + "."] = k; // '5.' -> 'k'
     for (let k in special) rev[special[k]] = k;
 
     let lastDeleted = { id: "", text: "" };
@@ -218,15 +224,29 @@
         let input = document.getElementById('codeInput').value;
         let parts = input.split(/(\/|\([^)]+\))/); 
         let final = "";
+
         parts.forEach(p => {
             if (!p) return;
             if (p === "/") { final += " "; return; }
             if (p.startsWith("(") && p.endsWith(")")) { final += p; return; }
+
             let i = 0;
             while (i < p.length) {
-                if (i + 1 < p.length && p[i+1] === ".") { final += rev[p.substr(i, 2)] || p[i]; i += 2; } 
-                else if (i + 1 < p.length && rev[p.substr(i, 2)]) { final += rev[p.substr(i, 2)]; i += 2; }
-                else { final += rev[p[i]] || p[i]; i++; }
+                // पहले चेक करें कि क्या यह बिंदु वाला कोड है (जैसे 5.)
+                if (i + 1 < p.length && p[i+1] === ".") {
+                    final += rev[p.substr(i, 2)] || p[i];
+                    i += 2;
+                } 
+                // फिर चेक करें 2 अंकों का कोड (जैसे 13)
+                else if (i + 1 < p.length && rev[p.substr(i, 2)]) {
+                    final += rev[p.substr(i, 2)];
+                    i += 2;
+                }
+                // फिर सिंगल कैरेक्टर (# या 0)
+                else {
+                    final += rev[p[i]] || p[i];
+                    i++;
+                }
             }
         });
         document.getElementById('textOutput').innerText = final || "--";
