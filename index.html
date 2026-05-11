@@ -5,37 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Noor Alam 2.113.13</title>
     
+    <link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22CodeWorld%22%2C%22short_name%22%3A%22CodeWorld%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23f8f9fa%22%2C%22theme_color%22%3A%22%23f8f9fa%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22https%3A%2F%2Fi.postimg.cc%2F0y0S8S0Z%2F1000022693.png%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fpng%22%7D%5D%7D">
     <meta name="theme-color" content="#f8f9fa">
-    <link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22Noor%20Alam%20Code%22%2C%22short_name%22%3A%22CodeWorld%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23f8f9fa%22%2C%22theme_color%22%3A%22%23f8f9fa%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22https%3A%2F%2Fi.postimg.cc%2F0y0S8S0Z%2F1000022693.png%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fpng%22%2C%22purpose%22%3A%22any%20maskable%22%7D%5D%7D">
+    <link rel="apple-touch-icon" href="https://i.postimg.cc/0y0S8S0Z/1000022693.png">
 
     <style>
         :root { --bg: #f8f9fa; --sd: #d1d9e6; --sl: #ffffff; --acc: #0a2e1f; }
         body { font-family: sans-serif; background: var(--bg); margin: 0; padding: 10px 0; display: flex; flex-direction: column; align-items: center; }
         
-        /* Lock */
         #lock { position: fixed; inset: 0; background: var(--bg); z-index: 99; display: flex; align-items: center; justify-content: center; }
         .p-card { background: var(--bg); padding: 20px; border-radius: 20px; box-shadow: 8px 8px 15px var(--sd), -8px -8px 15px var(--sl); text-align: center; }
         input { width: 120px; padding: 8px; border: none; border-bottom: 2px solid var(--acc); background: none; text-align: center; font-size: 18px; outline: none; margin-bottom: 15px; }
 
-        /* Main App - Compact Design */
         #app { display: none; width: 100%; flex-direction: column; align-items: center; }
         .h { text-align: center; margin-bottom: 15px; }
-        .h h1 { font-size: 20px; color: var(--acc); margin: 2px 0; }
+        .h h1 { font-size: 22px; color: var(--acc); margin: 2px 0; font-weight: 800; }
         .h span { font-size: 11px; color: #777; font-weight: bold; }
 
         .cont { width: 90%; max-width: 360px; }
         .card { background: var(--bg); border-radius: 18px; padding: 15px; margin-bottom: 20px; box-shadow: 6px 6px 12px var(--sd), -6px -6px 12px var(--sl); }
         
         .s-h { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
-        .i-b { width: 32px; height: 32px; background: #fff; border-radius: 8px; display: flex; align-items: center; justify-content: center; box-shadow: 3px 3px 6px var(--sd); font-weight: bold; font-size: 14px; }
-        .t-x b { display: block; font-size: 13px; color: #333; }
+        .i-b { width: 32px; height: 32px; background: #fff; border-radius: 8px; display: flex; align-items: center; justify-content: center; box-shadow: 3px 3px 6px var(--sd); font-weight: bold; }
+        .t-x b { font-size: 14px; color: #333; }
         
-        textarea { width: 100%; border: none; background: none; border-bottom: 1px solid #ddd; padding: 5px 0; font-size: 15px; outline: none; color: #444; resize: none; }
+        textarea { width: 100%; border: none; background: none; border-bottom: 1px solid #ddd; padding: 5px 0; font-size: 16px; outline: none; color: #444; resize: none; }
         .act { display: flex; gap: 10px; justify-content: flex-end; margin-top: -32px; }
         .btn { width: 32px; height: 32px; border-radius: 8px; border: none; background: var(--bg); box-shadow: 3px 3px 6px var(--sd), -3px -3px 6px var(--sl); cursor: pointer; display: flex; align-items: center; justify-content: center; }
         .btn svg { width: 16px; height: 16px; fill: #666; }
 
-        .out { width: 100%; min-height: 30px; border-bottom: 2px solid #333; padding: 8px 0; font-size: 16px; color: #000; font-weight: 500; word-wrap: break-word; margin-top: 10px; }
+        .out { width: 100%; min-height: 30px; border-bottom: 2px solid #333; padding: 8px 0; font-size: 18px; color: #000; font-weight: 500; word-wrap: break-word; margin-top: 10px; }
         .f { margin-top: 15px; font-size: 10px; font-weight: bold; color: var(--acc); letter-spacing: 1px; }
         #tst { visibility: hidden; background: #333; color: #fff; padding: 8px 16px; border-radius: 20px; position: fixed; bottom: 20px; font-size: 12px; }
         #tst.show { visibility: visible; }
@@ -53,7 +52,7 @@
 
 <div id="app">
     <div class="h">
-        <div style="font-size: 30px;">🛡️</div>
+        <div style="font-size: 35px; margin-bottom: 5px;">🛡️</div>
         <h1>Noor Alam 2.113.13</h1>
         <span>🌹 #43615.012</span>
     </div>
