@@ -6,223 +6,117 @@
     <title>Noor Alam 2.113.13</title>
     
     <meta name="theme-color" content="#f8f9fa">
-    <link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22Noor%20Alam%20Code%22%2C%22short_name%22%3A%22CodeWorld%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23f8f9fa%22%2C%22theme_color%22%3A%22%23f8f9fa%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22https%3A%2F%2Fstorage.googleapis.com%2Freplit%2Fimages%2F1715421287955_c6d669a0397554f68593a61f4345f657.png%22%2C%22sizes%22%3A%22192x192%22%2C%22type%22%3A%22image%2Fpng%22%7D%5D%7D">
+    <link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22Noor%20Alam%20Code%22%2C%22short_name%22%3A%22CodeWorld%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23f8f9fa%22%2C%22theme_color%22%3A%22%23f8f9fa%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22https%3A%2F%2Fi.postimg.cc%2F0y0S8S0Z%2F1000022693.png%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fpng%22%2C%22purpose%22%3A%22any%20maskable%22%7D%5D%7D">
 
     <style>
-        :root {
-            --bg: #f8f9fa;
-            --shadow-light: #ffffff;
-            --shadow-dark: #d1d9e6;
-            --accent: #0a2e1f;
-        }
-
-        body { 
-            font-family: 'Segoe UI', sans-serif; 
-            background: var(--bg);
-            margin: 0; padding: 20px 0;
-            display: flex; flex-direction: column; align-items: center;
-        }
-
-        /* Lock Screen */
-        #lock-screen {
-            position: fixed; inset: 0; background: var(--bg); z-index: 9999;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-        }
-        .pass-card {
-            background: var(--bg); padding: 30px; border-radius: 30px;
-            box-shadow: 10px 10px 20px var(--shadow-dark), -10px -10px 20px var(--shadow-light);
-            text-align: center;
-        }
-        .pass-card input {
-            width: 150px; padding: 10px; border: none; border-bottom: 2.5px solid var(--accent);
-            background: none; text-align: center; font-size: 22px; outline: none; margin-bottom: 20px;
-        }
-
-        /* App Structure */
-        #main-app { display: none; width: 100%; flex-direction: column; align-items: center; }
+        :root { --bg: #f8f9fa; --sd: #d1d9e6; --sl: #ffffff; --acc: #0a2e1f; }
+        body { font-family: sans-serif; background: var(--bg); margin: 0; padding: 10px 0; display: flex; flex-direction: column; align-items: center; }
         
-        .header { text-align: center; margin-bottom: 25px; }
-        .header h1 { font-size: 26px; color: var(--accent); margin: 5px 0; font-weight: 800; }
-        .header span { font-size: 14px; color: #555; font-weight: bold; }
+        /* Lock */
+        #lock { position: fixed; inset: 0; background: var(--bg); z-index: 99; display: flex; align-items: center; justify-content: center; }
+        .p-card { background: var(--bg); padding: 20px; border-radius: 20px; box-shadow: 8px 8px 15px var(--sd), -8px -8px 15px var(--sl); text-align: center; }
+        input { width: 120px; padding: 8px; border: none; border-bottom: 2px solid var(--acc); background: none; text-align: center; font-size: 18px; outline: none; margin-bottom: 15px; }
 
-        .container { width: 92%; max-width: 400px; }
-        .card {
-            background: var(--bg); border-radius: 25px; padding: 25px; margin-bottom: 35px;
-            box-shadow: 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light);
-        }
+        /* Main App - Compact Design */
+        #app { display: none; width: 100%; flex-direction: column; align-items: center; }
+        .h { text-align: center; margin-bottom: 15px; }
+        .h h1 { font-size: 20px; color: var(--acc); margin: 2px 0; }
+        .h span { font-size: 11px; color: #777; font-weight: bold; }
 
-        /* Label Fix - icon and text side by side */
-        .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
-        .icon-box {
-            width: 40px; height: 40px; background: #fff; border-radius: 10px;
-            display: flex; align-items: center; justify-content: center;
-            box-shadow: 4px 4px 8px var(--shadow-dark); font-weight: 900; font-size: 18px; color: #444;
-        }
-        .title-text b { display: block; font-size: 15px; text-transform: uppercase; color: #222; }
-        .title-text span { font-size: 12px; color: #888; }
+        .cont { width: 90%; max-width: 360px; }
+        .card { background: var(--bg); border-radius: 18px; padding: 15px; margin-bottom: 20px; box-shadow: 6px 6px 12px var(--sd), -6px -6px 12px var(--sl); }
+        
+        .s-h { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+        .i-b { width: 32px; height: 32px; background: #fff; border-radius: 8px; display: flex; align-items: center; justify-content: center; box-shadow: 3px 3px 6px var(--sd); font-weight: bold; font-size: 14px; }
+        .t-x b { display: block; font-size: 13px; color: #333; }
+        
+        textarea { width: 100%; border: none; background: none; border-bottom: 1px solid #ddd; padding: 5px 0; font-size: 15px; outline: none; color: #444; resize: none; }
+        .act { display: flex; gap: 10px; justify-content: flex-end; margin-top: -32px; }
+        .btn { width: 32px; height: 32px; border-radius: 8px; border: none; background: var(--bg); box-shadow: 3px 3px 6px var(--sd), -3px -3px 6px var(--sl); cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .btn svg { width: 16px; height: 16px; fill: #666; }
 
-        textarea {
-            width: 100%; border: none; background: none; border-bottom: 1.5px solid #ddd;
-            padding: 10px 0; font-size: 17px; outline: none; color: #333; resize: none;
-        }
-
-        .actions { display: flex; gap: 12px; justify-content: flex-end; margin-top: -38px; }
-        .btn {
-            width: 40px; height: 40px; border-radius: 12px; border: none; background: #f8f9fa;
-            box-shadow: 4px 4px 8px var(--shadow-dark), -4px -4px 8px var(--shadow-light);
-            cursor: pointer; display: flex; align-items: center; justify-content: center;
-        }
-        .btn:active { box-shadow: inset 2px 2px 5px var(--shadow-dark); }
-        .btn svg { width: 20px; height: 20px; fill: #666; }
-
-        .output {
-            width: 100%; min-height: 40px; border-bottom: 2.5px solid #333;
-            padding: 12px 0; font-size: 19px; color: #000; font-weight: 500; word-wrap: break-word;
-        }
-
-        .footer { margin-top: 30px; font-size: 12px; font-weight: bold; color: var(--accent); letter-spacing: 2px; }
-        #toast { visibility: hidden; background: #333; color: #fff; padding: 12px 25px; border-radius: 50px; position: fixed; bottom: 30px; font-size: 14px; z-index: 1000; }
-        #toast.show { visibility: visible; }
+        .out { width: 100%; min-height: 30px; border-bottom: 2px solid #333; padding: 8px 0; font-size: 16px; color: #000; font-weight: 500; word-wrap: break-word; margin-top: 10px; }
+        .f { margin-top: 15px; font-size: 10px; font-weight: bold; color: var(--acc); letter-spacing: 1px; }
+        #tst { visibility: hidden; background: #333; color: #fff; padding: 8px 16px; border-radius: 20px; position: fixed; bottom: 20px; font-size: 12px; }
+        #tst.show { visibility: visible; }
     </style>
 </head>
 <body>
 
-<div id="lock-screen">
-    <div class="pass-card">
-        <div style="font-size: 50px; margin-bottom: 15px;">🔒</div>
-        <h3>Enter Password</h3>
-        <input type="password" id="passInput" placeholder="******">
-        <br>
-        <button class="btn" style="width: 100%; background: var(--accent); color: white; box-shadow: none;" onclick="checkPassword()">Unlock</button>
+<div id="lock">
+    <div class="p-card">
+        <div style="font-size: 30px;">🔒</div>
+        <input type="password" id="ps" placeholder="Password">
+        <button class="btn" style="width: 100%; background: var(--acc); color: white;" onclick="ck()">Unlock</button>
     </div>
 </div>
 
-<div id="main-app">
-    <div class="header">
-        <div style="font-size: 40px; margin-bottom: 10px;">🛡️</div>
+<div id="app">
+    <div class="h">
+        <div style="font-size: 30px;">🛡️</div>
         <h1>Noor Alam 2.113.13</h1>
         <span>🌹 #43615.012</span>
     </div>
 
-    <div class="container">
+    <div class="cont">
         <div class="card">
-            <div class="section-header">
-                <div class="icon-box">T</div>
-                <div class="title-text"><b>Word to Code</b><span>Enter text below</span></div>
+            <div class="s-h"><div class="i-b">T</div><div class="t-x"><b>Word to Code</b></div></div>
+            <textarea id="tIn" placeholder="Text..." oninput="en()"></textarea>
+            <div class="act">
+                <button class="btn" onclick="clr('tIn','cOut')"><svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg></button>
+                <button class="btn" onclick="res('tIn','cOut')"><svg viewBox="0 0 24 24"><path d="M12.5 8c-2.65 0-5.05.99-6.9 2.6L2 7v9h9l-3.62-3.62c1.39-1.16 3.16-1.88 5.12-1.88 3.54 0 6.55 2.31 7.6 5.5l2.37-.78C21.08 11.03 17.15 8 12.5 8z"/></svg></button>
             </div>
-            <textarea id="textInput" placeholder="Type here..." oninput="encodeText()"></textarea>
-            <div class="actions">
-                <button class="btn" onclick="clearWithUndo('textInput', 'codeOutput')">
-                    <svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
-                </button>
-                <button class="btn" onclick="restoreText('textInput', 'codeOutput')">
-                    <svg viewBox="0 0 24 24"><path d="M12.5 8c-2.65 0-5.05.99-6.9 2.6L2 7v9h9l-3.62-3.62c1.39-1.16 3.16-1.88 5.12-1.88 3.54 0 6.55 2.31 7.6 5.5l2.37-.78C21.08 11.03 17.15 8 12.5 8z"/></svg>
-                </button>
-            </div>
-            <div style="text-align: center; margin: 20px 0; color: #ddd; font-size: 24px;">︾</div>
-            <div class="output" id="codeOutput">--</div>
-            <div class="actions" style="margin-top: -45px;">
-                <button class="btn" onclick="copyThis('codeOutput')">
-                    <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
-                </button>
-            </div>
+            <div style="text-align: center; margin: 10px 0; color: #ddd;">︾</div>
+            <div class="out" id="cOut">--</div>
+            <div class="act" style="margin-top: -35px;"><button class="btn" onclick="cp('cOut')"><svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg></button></div>
         </div>
 
         <div class="card">
-            <div class="section-header">
-                <div class="icon-box">&lt;/&gt;</div>
-                <div class="title-text"><b>Code to Word</b><span>Paste code below</span></div>
+            <div class="s-h"><div class="i-b">&lt;/&gt;</div><div class="t-x"><b>Code to Word</b></div></div>
+            <textarea id="cIn" placeholder="Code..." oninput="de()"></textarea>
+            <div class="act">
+                <button class="btn" onclick="clr('cIn','tOut')"><svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg></button>
+                <button class="btn" onclick="res('cIn','tOut')"><svg viewBox="0 0 24 24"><path d="M12.5 8c-2.65 0-5.05.99-6.9 2.6L2 7v9h9l-3.62-3.62c1.39-1.16 3.16-1.88 5.12-1.88 3.54 0 6.55 2.31 7.6 5.5l2.37-.78C21.08 11.03 17.15 8 12.5 8z"/></svg></button>
             </div>
-            <textarea id="codeInput" placeholder="Paste here..." oninput="decodeText()"></textarea>
-            <div class="actions">
-                <button class="btn" onclick="clearWithUndo('codeInput', 'textOutput')">
-                    <svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
-                </button>
-                <button class="btn" onclick="restoreText('codeInput', 'textOutput')">
-                    <svg viewBox="0 0 24 24"><path d="M12.5 8c-2.65 0-5.05.99-6.9 2.6L2 7v9h9l-3.62-3.62c1.39-1.16 3.16-1.88 5.12-1.88 3.54 0 6.55 2.31 7.6 5.5l2.37-.78C21.08 11.03 17.15 8 12.5 8z"/></svg>
-                </button>
-            </div>
-            <div style="text-align: center; margin: 20px 0; color: #ddd; font-size: 24px;">︾</div>
-            <div class="output" id="textOutput">--</div>
-            <div class="actions" style="margin-top: -45px;">
-                <button class="btn" onclick="copyThis('textOutput')">
-                    <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
-                </button>
-            </div>
+            <div style="text-align: center; margin: 10px 0; color: #ddd;">︾</div>
+            <div class="out" id="tOut">--</div>
+            <div class="act" style="margin-top: -35px;"><button class="btn" onclick="cp('tOut')"><svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg></button></div>
         </div>
     </div>
-
-    <div class="footer">WELCOME TO MY CODE WORLD</div>
+    <div class="f">DESIGNED BY NOOR ALAM</div>
 </div>
 
-<div id="toast">Copied! ✅</div>
+<div id="tst">Copied! ✅</div>
 
 <script>
-    const currentPassword = "186142";
-    window.onload = () => { if(localStorage.getItem("app_password") === currentPassword) showApp(); };
-    function checkPassword() {
-        if(document.getElementById("passInput").value === currentPassword) {
-            localStorage.setItem("app_password", currentPassword);
-            showApp();
-        } else { alert("Wrong! ❌"); }
+    const pass = "186142";
+    window.onload = () => { if(localStorage.getItem("p")===pass) ok(); };
+    function ck() { if(document.getElementById("ps").value===pass){ localStorage.setItem("p",pass); ok(); } else alert("X"); }
+    function ok() { document.getElementById("lock").style.display="none"; document.getElementById("app").style.display="flex"; }
+
+    const m1 = {'e':'13','f':'41','g':'83','h':'32','i':'52','n':'12','o':'11','r':'44','s':'61','t':'21','u':'43','v':'53','w':'22','x':'63','a':'0','m':'#'};
+    const m2 = {'b':'1','c':'2','d':'3','j':'4','k':'5','l':'6','p':'7','q':'8','y':'9','z':'0'};
+    const r = {}; for(let k in m1) r[m1[k]]=k; for(let k in m2) r[m2[k]+"."]=k;
+
+    let ld = { i: "", t: "" };
+    function en() {
+        let v = document.getElementById('tIn').value.toLowerCase(), res = "";
+        for(let c of v) res += (c===' ' ? "/" : (m1[c] || (m2[c] ? m2[c]+"." : c)));
+        document.getElementById('cOut').innerText = res || "--";
     }
-    function showApp() {
-        document.getElementById("lock-screen").style.display = "none";
-        document.getElementById("main-app").style.display = "flex";
-    }
-
-    // Logic
-    const dMap = {'e':'13', 'f':'41', 'g':'83', 'h':'32', 'i':'52', 'n':'12', 'o':'11', 'r':'44', 's':'61', 't':'21', 'u':'43', 'v':'53', 'w':'22', 'x':'63', 'a':'0', 'm':'#'};
-    const sMap = {'b':'1', 'c':'2', 'd':'3', 'j':'4', 'k':'5', 'l':'6', 'p':'7', 'q':'8', 'y':'9', 'z':'0'};
-    const rev = {};
-    for(let k in dMap) rev[dMap[k]] = k;
-    for(let k in sMap) rev[sMap[k] + "."] = k;
-
-    let lastDeleted = { id: "", text: "" };
-
-    function encodeText() {
-        let val = document.getElementById('textInput').value.toLowerCase();
-        let res = "";
-        for(let c of val) {
-            if(c === ' ') res += "/";
-            else res += dMap[c] || (sMap[c] ? sMap[c] + "." : c);
+    function de() {
+        let v = document.getElementById('cIn').value, res = "", i = 0;
+        while(i < v.length) {
+            if(v[i]==='/') { res+=" "; i++; }
+            else if(v[i+1]==='.') { res+=r[v.substr(i,2)]||v[i]; i+=2; }
+            else if(r[v.substr(i,2)]) { res+=r[v.substr(i,2)]; i+=2; }
+            else { res+=r[v[i]]||v[i]; i++; }
         }
-        document.getElementById('codeOutput').innerText = res || "--";
+        document.getElementById('tOut').innerText = res || "--";
     }
-
-    function decodeText() {
-        let val = document.getElementById('codeInput').value;
-        let res = "";
-        let i = 0;
-        while(i < val.length) {
-            if(val[i] === '/') { res += " "; i++; }
-            else if(val[i+1] === '.') { res += rev[val.substr(i,2)] || val[i]; i+=2; }
-            else if(rev[val.substr(i,2)]) { res += rev[val.substr(i,2)]; i+=2; }
-            else { res += rev[val[i]] || val[i]; i++; }
-        }
-        document.getElementById('textOutput').innerText = res || "--";
-    }
-
-    function clearWithUndo(inputId, outputId) {
-        lastDeleted = { id: inputId, text: document.getElementById(inputId).value };
-        document.getElementById(inputId).value = "";
-        document.getElementById(outputId).innerText = "--";
-    }
-
-    function restoreText(inputId, outputId) {
-        if(lastDeleted.id === inputId) {
-            document.getElementById(inputId).value = lastDeleted.text;
-            if(inputId === 'textInput') encodeText(); else decodeText();
-        }
-    }
-
-    function copyThis(id) {
-        navigator.clipboard.writeText(document.getElementById(id).innerText).then(() => {
-            let t = document.getElementById("toast");
-            t.classList.add("show");
-            setTimeout(() => t.classList.remove("show"), 2000);
-        });
-    }
+    function clr(i,o) { ld={i:i,t:document.getElementById(i).value}; document.getElementById(i).value=""; document.getElementById(o).innerText="--"; }
+    function res(i,o) { if(ld.i===i) { document.getElementById(i).value=ld.t; if(i==='tIn') en(); else de(); } }
+    function cp(i) { navigator.clipboard.writeText(document.getElementById(i).innerText); let t=document.getElementById("tst"); t.classList.add("show"); setTimeout(()=>t.classList.remove("show"),1500); }
 </script>
 </body>
 </html>
